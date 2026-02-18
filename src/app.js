@@ -11,7 +11,7 @@ app.use(morgan('dev'));
 
 //routes
 app.use("/api/users", require("./routes/userRoutes"));
-app.use("/api/tradein", require("./routes/tradeinRoutes"));
+app.use("/api/tradein", require("./routes/tradeInRoutes"));
 app.use("/api/orders", require("./routes/orderRoutes"));
 app.use("/api/webhook", require("./routes/webhookRoutes"));
 
