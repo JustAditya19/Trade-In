@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const { calculateFinalAmount } = require('../services/paymentService');
+const { initiatePayment } = require('../services/paymentGatewayService');
 
 exports.createOrder = async (req, res, next) => {
     try {
@@ -13,11 +14,15 @@ exports.createOrder = async (req, res, next) => {
             devicePrice,
             tradeInCredit,
             finalAmount,
+            paymentStatus: 'pending',
         });
+
+        const payment = await initiatePayment(order);
 
         res.status(201).json({
             success: true,
             order,
+            payment,
         });
     } catch (error) {
         next(error);

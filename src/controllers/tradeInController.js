@@ -49,3 +49,23 @@ exports.acceptTradein = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.completeTradeIn = async (req, res, next) => {
+    try {
+        const tradeIn = await TradeIn.findById(req.params.id);
+
+        if (!tradeIn) {
+            return res.status(404).json({ message: 'Trade-in not found' });
+        }
+
+        tradeIn.status = 'completed';
+        await tradeIn.save();
+
+        res.json({
+            success: true,
+            message: 'Trade-in completed',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
