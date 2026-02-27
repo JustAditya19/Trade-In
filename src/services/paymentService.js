@@ -15,6 +15,10 @@ const calculateFinalAmount = async ({ devicePrice, tradeInId }) => {
 
     const subtotal = devicePrice - tradeInCredit;
 
+    if (subtotal < 0) {
+        throw new Error("Invalid billing amount");
+    }
+
     const tax = subtotal * 0.18; // 18% GST
 
     const finalAmount = subtotal + tax;

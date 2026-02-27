@@ -13,6 +13,11 @@ exports.handlePaymentWebhook = async (req, res, next) => {
 
         if (status === "success") {
             order.paymentStatus = "paid";
+            
+            //in-order to prevent double updates
+            if (order.paymentStatus === "paid") {
+                return res.json({ message: "Already processed" });
+            }
 
             // Update trade-in lifecycle
             if (order.tradeIn) {
